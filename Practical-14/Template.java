@@ -1,2 +1,5 @@
 import java.util.*;
-import java.functional.
+import java.util.function.Supplier;
+
+public class Template{
+  
