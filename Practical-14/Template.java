@@ -1,5 +1,3 @@
- package Practical_14;
-
 import java.util.*;
 import java.util.function.Supplier;
 
