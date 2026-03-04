@@ -74,11 +74,28 @@ public class openHash {
                 size++;
                 return;
             }
+            
+            if (entry.state == Entry.State.DELETED && firstDeleted == -1) {
+                firstDeleted = index;
+                continue;
+            }
+            
+            if (entry.state == Entry.State.OCCUPIED && key.equals(entry.key)) {
+                entry.value = value;
+                return;
+            }
         
+            }
             
+            if (entry.state == Entry.State.DELETED && firstDeleted == -1) {
+                firstDeleted = index;
+                continue;
+            }
             
-    
-
-
-                  
+            if (entry.state == Entry.State.OCCUPIED && key.equals(entry.key)) {
+                entry.value = value;
+                return;
+            }
+        }
+        
     
