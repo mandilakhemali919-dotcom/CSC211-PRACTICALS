@@ -107,6 +107,18 @@ public class openHash {
     private int m() {
         return table.length - 1;
     }
+
+    private int hash(String key) {
+        long mixed = mix64(key.hashCode() ^ seed);
+        return (int) ((mixed & 0x7fffffffL) % m()) + 1;
+    }
     
+    // ... other methods similar but using Entry objects
+    private static long mix64(long z) {
+        z = (z ^ (z >>> 33)) * 0xff51afd7ed558ccdL;
+        z = (z ^ (z >>> 33)) * 0xc4ceb9fe1a85ec53L;
+        return z ^ (z >>> 33);
+    }
+}
     
     
