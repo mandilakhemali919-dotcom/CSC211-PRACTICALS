@@ -70,6 +70,42 @@ public class TemplateFunctional {
         printResult(config.alphaPercent(), config.n(), openAvg, chainAvg);
     }
 
+    private static HashTable createAndPopulateTable(Supplier<HashTable> factory, Pair[] data) {
+        HashTable table = factory.get();
+        Arrays.stream(data).forEach(p -> table.insert(p.key, p.value));
+        return table;
+    }
+
+    private static String[] generateQueries(Pair[] usedData, int count) {
+        Random random = new Random();
+        String[] queries = new String[count];
+        Arrays.setAll(queries, i -> usedData[random.nextInt(usedData.length)].key);
+        return queries;
+    }
+
+    private static double benchmarkTable(HashTable table, String[] queries, int repetitions) {
+        return IntStream.range(0, repetitions)
+                .mapToDouble(r -> measureTime(() -> {
+                    for (String q : queries) table.lookup(q);
+                }))
+                .average()
+                .orElse(0.0);
+    }
+
+    private static double measureTime(Runnable action) {
+        long start = System.currentTimeMillis();
+        action.run();
+        return (System.currentTimeMillis() - start) / 1000.0;
+    }
+
+    record TestConfig(int alphaPercent, int n) {}
+
+    private static void printHeader() { /* same as before */ }
+    private static void printResult(int alphaPercent, int n, double openAvg, double chainAvg) { /* same as before */ }
+    private static String formatK(int n) { /* same as before */ }
+    private static String formatOneOverOneMinusAlpha(int alphaPercent) { /* same as before */ }
+}
+
                 
 
     
