@@ -28,3 +28,9 @@ public class chainHash {
         return table.get(hash(key)).get(key);
     }
 
+    public String remove(String key) {
+        Map<String, String> bucket = table.get(hash(key));
+        if (bucket.containsKey(key)) size--;
+        return bucket.remove(key);
+    }
+}
