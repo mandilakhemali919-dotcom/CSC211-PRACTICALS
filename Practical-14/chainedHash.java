@@ -21,5 +21,10 @@ public class chainHash {
     public void insert(String key, String value) {
         Map<String, String> bucket = table.get(hash(key));
         if (!bucket.containsKey(key)) size++;
-     
-}
+        bucket.put(key, value);
+    }
+
+    public String lookup(String key) {
+        return table.get(hash(key)).get(key);
+    }
+
