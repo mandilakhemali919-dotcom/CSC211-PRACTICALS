@@ -11,6 +11,15 @@ public class chainHash {
         this.table = new ArrayList<>(m);
         for (int i = 0; i < m; i++) {
             table.add(new LinkedHashMap<>()); // Preserves insertion order
-    
+        }
     }
 
+    private int hash(String key) {
+        return Math.abs(key.hashCode() % m);
+    }
+
+    public void insert(String key, String value) {
+        Map<String, String> bucket = table.get(hash(key));
+        if (!bucket.containsKey(key)) size++;
+     
+}
