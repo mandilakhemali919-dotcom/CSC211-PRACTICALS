@@ -97,5 +97,16 @@ public class openHash {
                 return;
             }
         }
-        
+        throw new IllegalStateException("no slot found");
+    }
+    
+    private int wrap(int index) {
+        return ((index - 1) % m()) + 1;
+    }
+    
+    private int m() {
+        return table.length - 1;
+    }
+    
+    
     
