@@ -52,10 +52,17 @@ public class Anagrams{
                 }
                 lines++;
             }
+
+            f.close();
+            System.out.println("Lines read: " + lines);
+            System.out.println("Unique words: " + D.size());
             
-           
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+            System.exit(1);
+        }
         
-        
+        /
           
         
         /
