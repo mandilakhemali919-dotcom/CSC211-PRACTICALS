@@ -34,8 +34,7 @@ public class Anagrams{
 
                 
                 for (String w : words) {
-                    // Clean word: remove digits and punctuation but keep apostrophes
-                    // Matches Python's: w.strip('[0123456789(,.,.;:_.!?---)]')
+                    
                     String W = w.replaceAll("[0-9(),.;:!?---]", "").trim();
                     
                     if (!W.isEmpty()) {
@@ -58,11 +57,21 @@ public class Anagrams{
             System.out.println("Unique words: " + D.size());
             
         } catch (IOException e) {
-            System.err.println("Error reading file: " + e.getMessage());
-            System.exit(1);
+        
+        // Step 2: Build anagram dictionary (like Python's A dictionary)
+        Map<String, List<String>> A = new HashMap<>();
+        
+        for (String w : D.keySet()) {
+            // Create signature by sorting letters
+            String a = signature(w);
+            
+            if (!A.containsKey(a)) {
+                List<String> wordList = new ArrayList<>();
+                wordList.add(w);
+                A.put(a, wordList);
+            } else {
+                A.get(a).add(w);
+            }
         }
         
-        /
-          
         
-        /
