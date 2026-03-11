@@ -85,4 +85,50 @@ public class Anagrams{
             }
         }
         
+        // Step 3: Write anagram lists to file
+        int anagramCount = 0;
         
+        try {
+            PrintWriter f = new PrintWriter("anagrams", "ISO-8859-1");
+            
+            // Sort keys for consistent output
+            List<String> keys = new ArrayList<>(A.keySet());
+            Collections.sort(keys);
+            
+            for (String key : keys) {
+                List<String> wordList = A.get(key);
+                
+                // Only output if more than one word (actual anagrams)
+                if (wordList.size() > 1) {
+                    anagramCount++;
+                    
+                    // Sort words alphabetically
+                    Collections.sort(wordList);
+                    
+                    // Build the anagram list string
+                    String anagramlist = "";
+                    for (String word : wordList) {
+                        if (anagramlist.isEmpty()) {
+                            anagramlist = word;
+                        } else {
+                            anagramlist += " " + word;
+                        }
+                    }
+                    
+                    // Write original list with LaTeX line break
+                    f.println(anagramlist + "\\\\");
+                    
+                    // Generate all rotations (like Python's repeat loop)
+                    String currentList = anagramlist;
+                    for (int repeat = 0; repeat < wordList.size() - 1; repeat++) {
+                        int space = currentList.indexOf(' ');
+                        if (space > 0) {
+                            currentList = currentList.substring(space + 1) + " " + 
+                                         currentList.substring(0, space);
+                            f.println(currentList + "\\\\");
+                        }
+                    }
+                }
+            }
+            
+            
