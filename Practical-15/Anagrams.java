@@ -159,6 +159,64 @@ public class Anagrams{
             System.err.println("Error reading anagrams file: " + e.getMessage());
             System.exit(1);
         }
+     
+        File latexDir = new File("latex");
+        if (!latexDir.exists()) {
+            latexDir.mkdirs();
+        }
         
+        // Step 6: Generate LaTeX file with proper formatting
+        try {
+            PrintWriter asftex = new PrintWriter(
+                new OutputStreamWriter(new FileOutputStream("latex/theAnagrams.tex"), "UTF-8"));
+            
+            char letter = 'X';
+            
+            for (String lemma : aa) {
+                if (!lemma.isEmpty()) {
+                    char initial = lemma.charAt(0);
+                    
+                    if (Character.toLowerCase(initial) != Character.toLowerCase(letter)) {
+                        letter = initial;
+                        asftex.println("\n\\vspace{14pt}");
+                        asftex.println("\\noindent\\textbf{\\Large " + 
+                                     Character.toUpperCase(initial) + "}\\\\*[+12pt]");
+                    }
+                    
+                    asftex.println(lemma);
+                }
+            }
+            
+            asftex.close();
+            System.out.println("LaTeX file created: latex/theAnagrams.tex");
+            
+        } catch (IOException e) {
+            System.err.println("Error writing LaTeX file: " + e.getMessage());
+            System.exit(1);
+        }
+        
+        // Step 7: Clean up temporary file (like Python's os.remove("anagrams"))
+        File anagramsFile = new File("anagrams");
+        if (anagramsFile.exists()) {
+            anagramsFile.delete();
+        }
+        
+        System.out.println("\nProcessing complete!");
+        System.out.println("To create PDF:");
+        System.out.println("1. Install LaTeX (MiKTeX/TeX Live/MacTeX)");
+        System.out.println("2. Create a main LaTeX document including latex/theAnagrams.tex");
+        System.out.println("3. Run: lualatex main.tex");
+    }
+    
+    /**
+     * Creates signature by sorting letters alphabetically
+     * Like Python's: return ''.join(sorted(word))
+     */
+    private static String signature(String word) {
+        char[] chars = word.toCharArray();
+        Arrays.sort(chars);
+        return new String(chars);
+    }
+}
         
             
