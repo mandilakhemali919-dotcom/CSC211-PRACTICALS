@@ -31,6 +31,31 @@ public class Anagrams{
             while ((line = f.readLine()) != null) {
                 linenumber++;
                 String[] words = line.split("\\s+");
+
                 
+                for (String w : words) {
+                    // Clean word: remove digits and punctuation but keep apostrophes
+                    // Matches Python's: w.strip('[0123456789(,.,.;:_.!?---)]')
+                    String W = w.replaceAll("[0-9(),.;:!?---]", "").trim();
+                    
+                    if (!W.isEmpty()) {
+                        // Make lowercase
+                        W = W.toLowerCase();
+                        
+                        // Update word count (Python's D[w] += 1)
+                        if (D.containsKey(W)) {
+                            D.put(W, D.get(W) + 1);
+                        } else {
+                            D.put(W, 1);
+                        }
+                    }
+                }
+                lines++;
+            }
             
-      
+           
+        
+        
+          
+        
+        /
