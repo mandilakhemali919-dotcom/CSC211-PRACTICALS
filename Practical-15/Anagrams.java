@@ -57,6 +57,17 @@ public class Anagrams{
             System.out.println("Unique words: " + D.size());
             
         } catch (IOException e) {
+          System.err.println("Error writing anagrams file: " + e.getMessage());
+            System.exit(1);
+        }
+        
+        
+        List<String> aa = new ArrayList<>();
+        
+        try {
+            BufferedReader asf = new BufferedReader(
+                new InputStreamReader(new FileInputStream("anagrams"), "ISO-8859-1"));
+            
         
         // Step 2: Build anagram dictionary (like Python's A dictionary)
         Map<String, List<String>> A = new HashMap<>();
