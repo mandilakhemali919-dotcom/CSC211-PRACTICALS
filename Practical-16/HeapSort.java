@@ -79,5 +79,87 @@ public static void main(String[] args)
         // Make copies for timing full dataset
         String[] fullArray1 = uniqueWords.clone();
         String[] fullArray2 = uniqueWords.clone();
+
+   
+        // Time bottom-up heapsort
+        startTime = System.nanoTime();
+        heapSortBottomUp(fullArray1);
+        endTime = System.nanoTime();
+        long bottomUpTime = endTime - startTime;
         
-       
+        // Time top-down heapsort
+        startTime = System.nanoTime();
+        heapSortTopDown(fullArray2);
+        endTime = System.nanoTime();
+        long topDownTime = endTime - startTime;
+        
+        // Display timings
+        System.out.println("\n📊 RESULTS:");
+        System.out.printf("Bottom-Up Heapsort:   %10d ns (%8.3f ms)%n", 
+                         bottomUpTime, bottomUpTime / 1_000_000.0);
+        System.out.printf("Top-Down Heapsort:    %10d ns (%8.3f ms)%n", 
+                         topDownTime, topDownTime / 1_000_000.0);
+        
+        double ratio = (double)topDownTime / bottomUpTime;
+        System.out.printf("Ratio (Top-Down/Bottom-Up): %.2f%n", ratio);
+        
+        // Verify both sorts produced same result
+        if (Arrays.equals(fullArray1, fullArray2)) {
+            System.out.println("✅ Both sorts produced identical results!");
+        } else {
+            System.out.println("❌ Warning: Sorts produced different results!");
+        }
+        
+        System.out.println("\n" + "=" .repeat(60));
+        System.out.println("📝 First 20 sorted words (bottom-up):");
+        for (int i = 0; i < Math.min(20, fullArray1.length); i++) {
+            System.out.printf("%2d: %s%n", i+1, fullArray1[i]);
+        }
+    }
+    
+    // ==================== HEAP UTILITY METHODS ====================
+    
+    /**
+     * Heapify a subtree rooted at index i (for bottom-up construction)
+     * n is size of heap
+     */
+    private static void heapify(String[] arr, int n, int i) {
+        int largest = i;        // Initialize largest as root
+        int left = 2 * i + 1;    // left child
+        int right = 2 * i + 2;   // right child
+        
+        // If left child exists and is greater than root
+        if (left < n && arr[left].compareTo(arr[largest]) > 0) {
+            largest = left;
+        }
+        
+        // If right child exists and is greater than current largest
+        if (right < n && arr[right].compareTo(arr[largest]) > 0) {
+            largest = right;
+        }
+        
+        // If largest is not root
+        if (largest != i) {
+            String swap = arr[i];
+            arr[i] = arr[largest];
+            arr[largest] = swap;
+            
+            // Recursively heapify the affected sub-tree
+            heapify(arr, n, largest);
+        }
+    }
+    
+    /**
+     * Build heap from bottom up (approach a)
+     * Starts from last non-leaf node and heapifies each node
+     */
+    private static void buildHeapBottomUp(String[] arr) {
+        int n = arr.length;
+        
+        // Start from last non-leaf node and move up
+        for (int i = n / 2 - 1; i >= 0; i--) {
+            heapify(arr, n, i);
+        }
+    }
+    
+    
