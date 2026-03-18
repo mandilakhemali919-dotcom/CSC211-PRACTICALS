@@ -39,12 +39,45 @@ public static void main(String[] args)
             }
             f.close();
             
-            System.out.println("Total words read: " + words.siz
+            System.out.println("Total words read: " + words.size());
+            System.out.println("Unique words: " + new HashSet<>(words).size());
+
+      
         } catch (IOException e) {
             System.err.println("Error reading file: " + e.getMessage());
             System.exit(1);
         }
         
-     
-
-            
+        // Get unique words for sorting (like last week's dictionary keys)
+        Set<String> uniqueWordSet = new HashSet<>(words);
+        String[] uniqueWords = uniqueWordSet.toArray(new String[0]);
+        
+        System.out.println("\nSorting " + uniqueWords.length + " unique words");
+        System.out.println("-" .repeat(60));
+        
+        // Test with small array first (20 words)
+        System.out.println("\n🔍 TESTING WITH SMALL ARRAY (first 20 words):");
+        String[] testArray = Arrays.copyOfRange(uniqueWords, 0, Math.min(20, uniqueWords.length));
+        
+        // Make copies for testing
+        String[] test1 = testArray.clone();
+        String[] test2 = testArray.clone();
+        
+        System.out.println("Original: " + Arrays.toString(testArray));
+        
+        // Test bottom-up heapsort
+        heapSortBottomUp(test1);
+        System.out.println("Bottom-up sorted: " + Arrays.toString(test1));
+        
+        // Test top-down heapsort
+        heapSortTopDown(test2);
+        System.out.println("Top-down sorted:  " + Arrays.toString(test2));
+        
+        System.out.println("\n" + "=" .repeat(60));
+        System.out.println("⚡ TIMING COMPARISON ON FULL DATASET:");
+        
+        // Make copies for timing full dataset
+        String[] fullArray1 = uniqueWords.clone();
+        String[] fullArray2 = uniqueWords.clone();
+        
+       
