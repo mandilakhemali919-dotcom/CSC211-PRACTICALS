@@ -158,5 +158,102 @@ public static void main(String[] args)
             heapify(arr, n, i);
         }
     }
+  
+    /**
+     * Insert a node into heap (for top-down construction)
+     */
+    private static void insertIntoHeap(String[] arr, int currentSize, String value) {
+        arr[currentSize] = value;
+        int child = currentSize;
+        int parent = (child - 1) / 2;
+        
+        // Bubble up while heap property is violated
+        while (child > 0 && arr[child].compareTo(arr[parent]) > 0) {
+            // Swap child and parent
+            String temp = arr[child];
+            arr[child] = arr[parent];
+            arr[parent] = temp;
+            
+            child = parent;
+            parent = (child - 1) / 2;
+        }
+    }
+    
+    /**
+     * Build heap from top down (approach b)
+     * Inserts elements one by one
+     */
+    private static void buildHeapTopDown(String[] arr) {
+        int n = arr.length;
+        String[] temp = new String[n];
+        
+        // Start with empty heap and insert one element at a time
+        for (int i = 0; i < n; i++) {
+            insertIntoHeap(temp, i, arr[i]);
+        }
+        
+        // Copy back to original array
+        System.arraycopy(temp, 0, arr, 0, n);
+    }
+    
+    // ==================== SORTING METHODS ====================
+    
+    /**
+     * Heapsort using bottom-up heap construction
+     */
+    public static void heapSortBottomUp(String[] arr) {
+        int n = arr.length;
+        
+        // Step 1: Build heap (bottom-up)
+        buildHeapBottomUp(arr);
+        
+        // Step 2: Extract elements from heap one by one
+        for (int i = n - 1; i > 0; i--) {
+            // Move current root to end
+            String temp = arr[0];
+            arr[0] = arr[i];
+            arr[i] = temp;
+            
+            // Heapify reduced heap
+            heapify(arr, i, 0);
+        }
+    }
+    
+    /**
+     * Heapsort using top-down heap construction
+     */
+    public static void heapSortTopDown(String[] arr) {
+        int n = arr.length;
+        
+        // Step 1: Build heap (top-down)
+        buildHeapTopDown(arr);
+        
+        // Step 2: Extract elements from heap one by one
+        // This part is SHAREABLE with bottom-up version
+        for (int i = n - 1; i > 0; i--) {
+            // Move current root to end
+            String temp = arr[0];
+            arr[0] = arr[i];
+            arr[i] = temp;
+            
+            // Heapify reduced heap
+            heapify(arr, i, 0);
+        }
+    }
+    
+    // ==================== VERIFICATION METHOD ====================
+    
+    /**
+     * Check if array is sorted (for testing)
+     */
+    private static boolean isSorted(String[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            if (arr[i].compareTo(arr[i + 1]) > 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
     
     
