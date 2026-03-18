@@ -117,12 +117,9 @@ public static void main(String[] args)
         }
     }
     
-    // ==================== HEAP UTILITY METHODS ====================
-    
-    /**
-     * Heapify a subtree rooted at index i (for bottom-up construction)
-     * n is size of heap
-     */
+      //HEAP UTILITY METHODS 
+
+
     private static void heapify(String[] arr, int n, int i) {
         int largest = i;        // Initialize largest as root
         int left = 2 * i + 1;    // left child
