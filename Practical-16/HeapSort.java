@@ -10,5 +10,7 @@ public static void main(String[] args)
     if (args.length != 1)
     {
       System.out.println("Usage: java TryHeapSort inputfile");
-      System.out.println("You gave: " + inputfile);
+      System.out.println("You gave: " + ArraystoStrings(args));
+      System.exit(1);
+    }
       
