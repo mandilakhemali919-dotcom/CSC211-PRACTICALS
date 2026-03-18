@@ -13,4 +13,6 @@ public static void main(String[] args)
       System.out.println("You gave: " + ArraystoStrings(args));
       System.exit(1);
     }
-      
+      String inputfile = args[0];
+    System.out.println("Datafile: " +
+      System.out.println(
