@@ -14,5 +14,5 @@ public static void main(String[] args)
       System.exit(1);
     }
       String inputfile = args[0];
-    System.out.println("Datafile: " +
-      System.out.println(
+    System.out.println("Datafile: " + inputfile)
+      System.out.println("=" + 
